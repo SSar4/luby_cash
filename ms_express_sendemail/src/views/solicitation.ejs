@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+</head>
+<body>
+    olá <%= data.fullName %> informamos que sua solicitação 
+    para abrir uma conta foi <%= data.status %><br/>
+    <% if( data.status=='approved' ){ %> 
+        <p> seu login é <%= data.email %> </p> 
+        <p> sua senha é <b><%= pass %></b></p>
+        <p>por questões de segrança é melhor mudar de senha depois</p>
+        <% }  else  { %> 
+        <p> agradecemos ;( </p> 
+        <% } %>
+    
+</body>
+</html>

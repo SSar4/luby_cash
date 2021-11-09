@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:10
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - '5431:5432'
+    volumes:
+      - /usr/app/postgresql:/var/lib/postgresql
+      - ./scripts/scriptSQL/CriarDb.sql:/docker-entrypoint-initdb.d/CriarDb.sql
+    extra_hosts:
+      - ' host.docker.internal: 172.17.0.1 '
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    entrypoint: ['/bin/bash', './docker-entrypoint.sh']
+    ports:
+      - '3333:3333'
+    restart: always
+    volumes:
+      - '.:/usr/app'
+    extra_hosts:
+      - ' host.docker.internal: 172.17.0.1 '
