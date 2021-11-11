@@ -3,7 +3,7 @@ import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 export default class Roles extends BaseSchema {
   protected tableName = 'roles'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id')
       table.enum('user_type', ['administrator', 'client']).notNullable()
@@ -16,7 +16,7 @@ export default class Roles extends BaseSchema {
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }

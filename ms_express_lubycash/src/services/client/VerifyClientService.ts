@@ -6,7 +6,10 @@ class VerifyCPFService {
     const resp = await ClientModel.findOne({
       where: { cpfNumber: cpf },
     });
-    if (resp.getDataValue("averageSalary") > 500) {
+    if (
+      resp.getDataValue("averageSalary") > 500 &&
+      resp.getDataValue("status") === "pending"
+    ) {
       resp.setDataValue("status", "approved");
       resp.save();
       const kafka = new Kafka({ groupId: "sendClientApproved" });
@@ -28,7 +31,10 @@ class VerifyCPFService {
         "-------------------------------"
       );
        */
-    } else if (resp.getDataValue("averageSalary") < 500) {
+    } else if (
+      resp.getDataValue("averageSalary") < 500 &&
+      resp.getDataValue("status") === "pending"
+    ) {
       resp.setDataValue("status", "disapproved");
       const kafka = new Kafka({ groupId: "sendClientDesapproved" });
       resp.save();

@@ -51,3 +51,7 @@ Route.group(() => {
     'admin'
   )
 }).middleware(['auth'])
+
+Route.group(() => {
+  Route.get('/accounts', 'AccountsController.index')
+}).middleware('auth')

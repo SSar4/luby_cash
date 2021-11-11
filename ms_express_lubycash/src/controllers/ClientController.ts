@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import { ClientModel } from "../database/models/Client";
-import Clients from "../models/Client";
+import { validationResult } from "express-validator";
 import CheckClientsController from "../services/client/VerifyClientService";
 class ClientController {
   async findAll(req: Request, res: Response) {}
 
   create(req: Request, res: Response) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
       const {
         fullName,
         email,
@@ -19,7 +23,7 @@ class ClientController {
         status,
         averageSalary,
         currentBalance,
-      }: Clients = req.body;
+      } = req.body;
       const client = {
         fullName,
         email,
